@@ -46,8 +46,6 @@ jobs:
         if: ${{ matrix.os == 'macos-latest'}}
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
-        with:
-          vs-version: '[16.4,16.5)'
         if: ${{ matrix.os == 'windows-latest'}}
       - name: Compile
         run: msbuild projects/opendune_vs140.sln
