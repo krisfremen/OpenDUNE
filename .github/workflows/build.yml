@@ -31,10 +31,10 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME}
-        if: ${{ matrix.sdl == 2 && (matrix.os == 'macos-latest' || matrix.os == 'linux-latest') }}
+        if: ${{ matrix.sdl == 2 && matrix.os != 'windows-latest' }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME} --without-sdl2
-        if: ${{ matrix.sdl == 1 && (matrix.os == 'macos-latest' || matrix.os == 'linux-latest') }}
+        if: ${{ matrix.sdl == 1 && matrix.os != 'windows-latest' }}
       - name: Compile
         run: make -j3
         if: ${{ matrix.os == 'macos-latest' || matrix.os == 'linux-latest' }}
