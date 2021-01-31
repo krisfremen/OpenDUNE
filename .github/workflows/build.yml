@@ -25,7 +25,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest'}}
       - name: Install dependencies (MacOS)
         run: brew install sdl sdl_image
-        if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 1 }}
       - name: Install dependencies (MacOS)
         run: brew install sdl2 sdl2_image
         if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
