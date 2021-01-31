@@ -5,13 +5,13 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.os }}
+    name: ${{ matrix.os }} ${{ matrix.sdl }}
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
         sdl: [ 1, 2 ]
 
     steps:
@@ -31,12 +31,13 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME}
-        if: ${{ matrix.sdl == 2}}
+        if: ${{ matrix.sdl == 2 && (matrix.os == 'macos-latest' || matrix.os == 'linux-latest') }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME} --without-sdl2
-        if: ${{ matrix.sdl == 1}}
+        if: ${{ matrix.sdl == 1 && (matrix.os == 'macos-latest' || matrix.os == 'linux-latest') }}
       - name: Compile
         run: make -j3
+        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'linux-latest' }}
       - name: Bundle
         run: make bundle_zip
         if: ${{ matrix.os == 'ubuntu-latest'}}
@@ -53,3 +54,6 @@ jobs:
           name: Linux build SDL${{ matrix.sdl }}
           path: bundles/*zip
         if: ${{ matrix.os == 'ubuntu-latest'}}
+      - name: Compile
+        run: msbuild projects/opendune_vs140.sln
+        if: ${{ matrix.os == 'windows-latest'}}
