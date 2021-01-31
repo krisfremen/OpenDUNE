@@ -26,13 +26,13 @@ jobs:
 
       - name: Update brew (MacOS)
         run: brew update
-        if: ${{ matrix.os == "macos-latest"}}
+        if: ${{ matrix.os == 'macos-latest'}}
       - name: Install dependencies (MacOS)
         run: brew install sdl sdl_image
-        if: ${{ matrix.os == "macos-latest" && matrix.sdl == 2 }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
       - name: Install dependencies (MacOS)
         run: brew install sdl2 sdl2_image
-        if: ${{ matrix.os == "macos-latest" && matrix.sdl == 2 }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.sdl == 2 }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME}
         if: ${{ matrix.sdl == 2}}
