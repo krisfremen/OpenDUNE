@@ -46,10 +46,10 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: build
-          path: OpenDUNE/bundles/*dmg
+          path: bundles/*dmg
         if: ${{ matrix.os == 'macos-latest'}}
       - uses: actions/upload-artifact@v2
         with:
           name: build
-          path: OpenDUNE/bundles/*zip
+          path: bundles/*zip
         if: ${{ matrix.os == 'ubuntu-latest'}}
