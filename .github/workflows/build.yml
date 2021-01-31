@@ -22,10 +22,10 @@ jobs:
 
       - name: Configure
         run: ./configure --prefix-dir=${HOME}
-        if: ${{ sdl == 2}}
+        if: ${{ matrix.sdl == 2}}
       - name: Configure
         run: ./configure --prefix-dir=${HOME} --without-sdl2
-        if: ${{ sdl == 1}}
+        if: ${{ matrix.sdl == 1}}
       - name: Compile
         run: make -j3
       - name: Bundle
