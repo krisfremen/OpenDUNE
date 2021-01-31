@@ -39,3 +39,17 @@ jobs:
         run: make -j3
       - name: Bundle
         run: make bundle_zip
+        if: ${{ matrix.os == 'ubuntu-latest'}}
+      - name: Bundle
+        run: make bundle_dmg
+        if: ${{ matrix.os == 'macos-latest'}}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+            path: OpenDUNE/bundles/*dmg
+        if: ${{ matrix.os == 'macos-latest'}}
+      - uses: actions/upload-artifact@v2
+          with:
+            name: build
+            path: OpenDUNE/bundles/*zip
+          if: ${{ matrix.os == 'ubuntu-latest'}}
