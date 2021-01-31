@@ -54,6 +54,10 @@ jobs:
           name: Linux build SDL${{ matrix.sdl }}
           path: bundles/*zip
         if: ${{ matrix.os == 'ubuntu-latest'}}
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+        with:
+          vs-version: '[16.4,16.5)'
       - name: Compile
         run: msbuild projects/opendune_vs140.sln
         if: ${{ matrix.os == 'windows-latest'}}
