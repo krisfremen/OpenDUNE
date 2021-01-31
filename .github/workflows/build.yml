@@ -11,15 +11,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        sdl: [1, 2]
+        os: [ ubuntu-latest, macos-latest ]
+        sdl: [ 1, 2 ]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Install dependencies (Linux)
         run: sudo apt-get install gcc-mingw-w64-i686 dos2unix libsdl1.2-dev libsdl-image1.2-dev libsdl2-dev libsdl2-image-dev zip
+        if: ${{ matrix.os == ubuntu-latest}}
+          - 'if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update > /dev/null ; fi'
+          - 'if [ "$TRAVIS_OS_NAME" = "osx" ] && [ "$SDLVERSION" = "1" ] ; then brew install sdl sdl_image ; fi'
+          - 'if [ "$TRAVIS_OS_NAME" = "osx" ] && [ "$SDLVERSION" = "2" ] ; then brew install sdl2 sdl2_image ; fi'
 
+      - name: Update brew (MacOS)
+        run: brew update
+        if: ${{ matrix.os == macos-latest}}
+      - name: Install dependencies (MacOS)
+        run: brew install sdl sdl_image
+        if: ${{ matrix.os == macos-latest && matrix.sdl == 2 }}
+      - name: Install dependencies (MacOS)
+        run: brew install sdl2 sdl2_image
+        if: ${{ matrix.os == macos-latest && matrix.sdl == 2 }}
       - name: Configure
         run: ./configure --prefix-dir=${HOME}
         if: ${{ matrix.sdl == 2}}
