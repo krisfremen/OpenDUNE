@@ -18,4 +18,4 @@ jobs:
 
       - name: Configure
         run: |
-          - ./configure --prefix-dir=${HOME}
+          - cd OpenDUNE && ./configure --prefix-dir=${HOME} --without-sdl &&  make -j3 && make bundle_zip
